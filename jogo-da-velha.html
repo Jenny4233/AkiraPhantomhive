@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jogo da Velha</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      margin: 40px auto;
+      gap: 5px;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      font-size: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #444;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Jogo da Velha</h1>
+    <div class="grid" id="grid"></div>
+    <p id="resultado"></p>
+    <button onclick="window.location.href='index.html'">Voltar</button>
+  </div>
+
+  <script>
+    const grid = document.getElementById('grid');
+    const resultado = document.getElementById('resultado');
+    let jogador = 'X';
+    const cells = [];
+
+    function checarVencedor() {
+      const posicoes = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      for (const pos of posicoes) {
+        const [a,b,c] = pos;
+        if (cells[a].textContent &&
+            cells[a].textContent === cells[b].textContent &&
+            cells[a].textContent === cells[c].textContent) {
+          resultado.textContent = `Jogador ${cells[a].textContent} venceu!`;
+          cells.forEach(cell => cell.removeEventListener('click', jogar));
+        }
+      }
+    }
+
+    function jogar() {
+      if (this.textContent === '') {
+        this.textContent = jogador;
+        jogador = jogador === 'X' ? 'O' : 'X';
+        checarVencedor();
+      }
+    }
+
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.addEventListener('click', jogar);
+      grid.appendChild(cell);
+      cells.push(cell);
+    }
+  </script>
+</body>
+</html>
