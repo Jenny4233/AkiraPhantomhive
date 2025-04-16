@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pedra, Papel, Tesoura</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Pedra, Papel, Tesoura</h1>
+    <div class="games">
+      <button onclick="jogar('pedra')">🪨 Pedra</button>
+      <button onclick="jogar('papel')">📄 Papel</button>
+      <button onclick="jogar('tesoura')">✂️ Tesoura</button>
+    </div>
+    <h2 id="resultado"></h2>
+    <button onclick="window.location.href='index.html'">Voltar</button>
+  </div>
+
+  <script>
+    function jogar(escolhaJogador) {
+      const opcoes = ['pedra', 'papel', 'tesoura'];
+      const escolhaBot = opcoes[Math.floor(Math.random() * 3)];
+      let resultado = '';
+
+      if (escolhaJogador === escolhaBot) {
+        resultado = 'Empate!';
+      } else if (
+        (escolhaJogador === 'pedra' && escolhaBot === 'tesoura') ||
+        (escolhaJogador === 'papel' && escolhaBot === 'pedra') ||
+        (escolhaJogador === 'tesoura' && escolhaBot === 'papel')
+      ) {
+        resultado = `Você venceu! Bot escolheu ${escolhaBot}`;
+      } else {
+        resultado = `Você perdeu! Bot escolheu ${escolhaBot}`;
+      }
+
+      document.getElementById('resultado').textContent = resultado;
+    }
+  </script>
+</body>
+</html>
